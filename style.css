@@ -155,6 +155,7 @@ nav ul li a:hover {
   text-align: center;
   padding-top: 0.1rem;
   display: none;
+  cursor: pointer;
 }
 @media (max-width: 70em) {
   header {
@@ -286,8 +287,10 @@ section {
 .right-option-btn {
   text-align: center;
   background-color: hsl(223, 64%, 98%, 0.9);
-  padding: 1.2rem 2rem;
   border-radius: 5px;
+  width: 20rem;
+  height: 5rem;
+  padding: 1.5rem;
 }
 .right-no-of-products {
   margin-left: 3rem;
