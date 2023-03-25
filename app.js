@@ -14,13 +14,6 @@ cartImg.addEventListener('click', (e) => {
   cartContainer.classList.toggle('active');
 });
 
-document.body.addEventListener('click', function (e) {
-  e.stopPropagation();
-  if (cartContainer.classList.contains('active')) {
-    cartContainer.classList.remove('active');
-  }
-});
-
 document.querySelector('.total-no-in-cart').addEventListener('click', (e) => {
   e.stopPropagation();
   cartContainer.classList.toggle('active');
@@ -101,6 +94,47 @@ document.querySelector('.right-positive-btn').addEventListener('click', () => {
 });
 function updateHtml() {
   noOfProductsEl.innerHTML = cartCountter;
+  if (totalNoOfProducts == 0) {
+    document.querySelector('.cart-body').innerHTML = `
+    <p class='cart-empty' >  Your Cart Is Empty </p>
+    `;
+  } else if (totalNoOfProducts > 0) {
+    totalPrice = totalNoOfProducts * productAfterDiscount;
+    document.querySelector('.cart-body').innerHTML = `
+    <div class="cart-product-info">
+    <img
+      class="cart-product-img"
+      src="images/image-product-1-thumbnail.jpg"
+      alt=""
+    />
+    <div class="cart-product-details">
+      <p class="cart-product-description">
+        Fall Limited Edition Sneakers
+      </p>
+      <div class="cart-product-price">
+        <p class="cart-product-price-one">${productAfterDiscount} $</p>
+        <span>X</span>
+        <p class="cart-products-no">${totalNoOfProducts}</p>
+        <p class="cart-total">${totalPrice} $</p>
+      </div>
+    </div>
+    <img
+      class="cart-product-delete"
+      src="images/icon-delete.svg"
+      alt=""
+    />
+  </div>
+  <button class="cart-checkout">Checkout</button>
+    
+    `;
+    document
+      .querySelector('.cart-product-delete')
+      .addEventListener('click', () => {
+        totalNoOfProducts = 0;
+        updateHtml();
+        document.querySelector('.total-no-in-cart').style.display = 'none';
+      });
+  }
 }
 document.querySelector('.right-negative-btn').addEventListener('click', () => {
   if (cartCountter == 0) {
@@ -110,18 +144,16 @@ document.querySelector('.right-negative-btn').addEventListener('click', () => {
     updateHtml();
   }
 });
-function updateHtml() {
-  totalPrice = cartCountter * productAfterDiscount;
-  noOfProductsEl.innerHTML = cartCountter;
-}
+
 document.querySelector('.right-add-btn').addEventListener('click', () => {
-  totalNoOfProducts = cartCountter;
-  document.querySelector('.total-no-in-cart').textContent = totalNoOfProducts;
-  document.querySelector('.total-no-in-cart').style.display = 'block';
-  document.querySelector('.cart-product-price-one').textContent =
-    productAfterDiscount + ' $';
-  document.querySelector('.cart-products-no').textContent = totalNoOfProducts;
-  document.querySelector('.cart-total').textContent = totalPrice + ' $';
-  cartCountter = 0;
-  updateHtml();
+  if (cartCountter == 0) {
+    return;
+  } else {
+    totalNoOfProducts = cartCountter;
+    document.querySelector('.total-no-in-cart').textContent = totalNoOfProducts;
+    document.querySelector('.total-no-in-cart').style.display = 'block';
+    cartCountter = 0;
+    updateHtml();
+  }
 });
+updateHtml();
